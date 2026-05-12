@@ -586,7 +586,7 @@ package "model" {
        - def : int
        - spd : int
        - vida : int
-       - ataques : List<Ataque>
+       - ataques : Array<Ataque>
 
 
        + usarAtaque()
@@ -775,16 +775,7 @@ package "persistence.dao" {
    }
 
 
-   interface JugadorDAO {
-       + guardarJugador(j : Jugador)
-       + obtenerJugador(id : int)
-   }
 
-
-   interface PartidaDAO {
-       + guardarPartida(p : Partida)
-       + cargarPartida(id : int)
-   }
 
 
    interface MazoDAO {
@@ -798,21 +789,15 @@ package "persistence.impl" {
 
 
    class CartaDAOImpl
-   class JugadorDAOImpl
-   class PartidaDAOImpl
    class MazoDAOImpl
 }
 
 
 CartaDAOImpl ..|> CartaDAO
-JugadorDAOImpl ..|> JugadorDAO
-PartidaDAOImpl ..|> PartidaDAO
 MazoDAOImpl ..|> MazoDAO
 
 
 CartaDAOImpl --> ConexionBD
-JugadorDAOImpl --> ConexionBD
-PartidaDAOImpl --> ConexionBD
 MazoDAOImpl --> ConexionBD
 
 
