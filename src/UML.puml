@@ -1,0 +1,819 @@
+@startuml
+
+
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+
+
+' =========================
+'        MODEL
+' =========================
+package "model" {
+
+
+   enum TipoCarta {
+       Bucle
+       Excepcion
+       Hilo
+       Objeto
+       Recursivo
+       BaseDeDatos
+       Memoria
+       Red
+       Compilador
+   }
+
+
+   enum Rareza {
+       Comun
+       Rara
+       Epica
+       Legendaria
+   }
+
+
+   class Carta {
+       - nombre : String
+       - tipo : TipoCarta
+       - rareza : Rareza
+       - atk : int
+       - def : int
+       - spd : int
+       - vida : int
+       - ataques : List<Ataque>
+
+
+       + usarAtaque()
+       + recibirDanio()
+       + aplicarBuff()
+   }
+
+
+   class Ataque {
+       - nombre : String
+       - descripcion : String
+       - danio : int
+       - efectoEspecial : String
+
+
+       + ejecutar()
+   }
+
+
+   class Jugador {
+       - nombre : String
+       - mazo : Mazo
+       - mano : List<Carta>
+
+
+       + robarCarta()
+       + jugarCarta()
+   }
+
+
+   class Mazo {
+       - cartas : List<Carta>
+
+
+       + barajar()
+       + sacarCarta()
+   }
+
+
+   class Partida {
+       - jugador1 : Jugador
+       - jugador2 : Jugador
+       - turnoActual : int
+
+
+       + iniciar()
+       + finalizarTurno()
+       + verificarGanador()
+   }
+
+
+   Carta "1" *-- "*" Ataque
+   Jugador "1" *-- "1" Mazo
+   Jugador "1" o-- "*" Carta
+   Partida --> Jugador
+}
+
+
+' =========================
+'      CONTROLLER
+' =========================
+package "controller" {
+
+
+   class JuegoController {
+       - partida : Partida
+
+
+       + iniciarJuego()
+       + procesarTurno()
+       + usarAtaque()
+   }
+
+
+   class CartaController {
+       + crearCarta()
+       + activarEfecto()
+   }
+
+
+   class TurnoController {
+       + siguienteTurno()
+       + validarVelocidad()
+   }
+}
+
+
+JuegoController --> Partida
+CartaController --> Carta
+TurnoController --> Partida
+
+
+' =========================
+'         VIEW
+' =========================
+package "view" {
+
+
+   class MenuPrincipalView {
+       + mostrarMenu()
+   }
+
+
+   class JuegoView {
+       + mostrarTablero()
+       + mostrarCarta()
+       + mostrarAtaques()
+   }
+
+
+   class ResultadoView {
+       + mostrarGanador()
+   }
+}
+
+
+MenuPrincipalView --> JuegoController
+JuegoView --> JuegoController
+ResultadoView --> JuegoController
+
+
+' =========================
+'        SERVICE
+' =========================
+package "service" {
+
+
+   class CombateService {
+       + calcularDanio()
+       + aplicarVentajaTipo()
+       + validarKO()
+   }
+
+
+   class EfectoService {
+       + aplicarBuff()
+       + aplicarDebuff()
+       + aplicarEstado()
+   }
+
+
+   class IAService {
+       + elegirMovimiento()
+   }
+}
+
+
+CombateService --> Carta
+EfectoService --> Carta
+IAService --> Jugador
+
+
+JuegoController --> CombateService
+JuegoController --> EfectoService
+JuegoController --> IAService
+
+
+' =========================
+'      PERSISTENCE
+' =========================
+
+
+package "persistence.connection" {
+
+
+   class ConexionBD {
+       - url : String
+       - user : String
+       - password : String
+
+
+       + getConnection() : Connection
+       + cerrarConexion()
+   }
+}
+
+
+package "persistence.dao" {
+
+
+   interface CartaDAO {
+       + guardarCarta(c : Carta)
+       + obtenerCarta(id : int)
+       + listarCartas()
+       + eliminarCarta(id : int)
+   }
+
+
+   interface JugadorDAO {
+       + guardarJugador(j : Jugador)
+       + obtenerJugador(id : int)
+   }
+
+
+   interface PartidaDAO {
+       + guardarPartida(p : Partida)
+       + cargarPartida(id : int)
+   }
+
+
+   interface MazoDAO {
+       + guardarMazo(m : Mazo)
+       + cargarMazo(id : int)
+   }
+}
+
+
+package "persistence.impl" {
+
+
+   class CartaDAOImpl
+   class JugadorDAOImpl
+   class PartidaDAOImpl
+   class MazoDAOImpl
+}
+
+
+CartaDAOImpl ..|> CartaDAO
+JugadorDAOImpl ..|> JugadorDAO
+PartidaDAOImpl ..|> PartidaDAO
+MazoDAOImpl ..|> MazoDAO
+
+
+CartaDAOImpl --> ConexionBD
+JugadorDAOImpl --> ConexionBD
+PartidaDAOImpl --> ConexionBD
+MazoDAOImpl --> ConexionBD
+
+
+@enduml
+@startuml
+
+
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+
+
+' =========================
+'        MODEL
+' =========================
+package "model" {
+
+
+   enum TipoCarta {
+       Bucle
+       Excepcion
+       Hilo
+       Objeto
+       Recursivo
+       BaseDeDatos
+       Memoria
+       Red
+       Compilador
+   }
+
+
+   enum Rareza {
+       Comun
+       Rara
+       Epica
+       Legendaria
+   }
+
+
+   class Carta {
+       - nombre : String
+       - tipo : TipoCarta
+       - rareza : Rareza
+       - atk : int
+       - def : int
+       - spd : int
+       - vida : int
+       - ataques : List<Ataque>
+
+
+       + usarAtaque()
+       + recibirDanio()
+       + aplicarBuff()
+   }
+
+
+   class Ataque {
+       - nombre : String
+       - descripcion : String
+       - danio : int
+       - efectoEspecial : String
+
+
+       + ejecutar()
+   }
+
+
+   class Jugador {
+       - nombre : String
+       - mazo : Mazo
+       - mano : List<Carta>
+
+
+       + robarCarta()
+       + jugarCarta()
+   }
+
+
+   class Mazo {
+       - cartas : List<Carta>
+
+
+       + barajar()
+       + sacarCarta()
+   }
+
+
+   class Partida {
+       - jugador1 : Jugador
+       - jugador2 : Jugador
+       - turnoActual : int
+
+
+       + iniciar()
+       + finalizarTurno()
+       + verificarGanador()
+   }
+
+
+   Carta "1" *-- "*" Ataque
+   Jugador "1" *-- "1" Mazo
+   Jugador "1" o-- "*" Carta
+   Partida --> Jugador
+}
+
+
+' =========================
+'      CONTROLLER
+' =========================
+package "controller" {
+
+
+   class JuegoController {
+       - partida : Partida
+
+
+       + iniciarJuego()
+       + procesarTurno()
+       + usarAtaque()
+   }
+
+
+   class CartaController {
+       + crearCarta()
+       + activarEfecto()
+   }
+
+
+   class TurnoController {
+       + siguienteTurno()
+       + validarVelocidad()
+   }
+}
+
+
+JuegoController --> Partida
+CartaController --> Carta
+TurnoController --> Partida
+
+
+' =========================
+'         VIEW
+' =========================
+package "view" {
+
+
+   class MenuPrincipalView {
+       + mostrarMenu()
+   }
+
+
+   class JuegoView {
+       + mostrarTablero()
+       + mostrarCarta()
+       + mostrarAtaques()
+   }
+
+
+   class ResultadoView {
+       + mostrarGanador()
+   }
+}
+
+
+MenuPrincipalView --> JuegoController
+JuegoView --> JuegoController
+ResultadoView --> JuegoController
+
+
+' =========================
+'        SERVICE
+' =========================
+package "service" {
+
+
+   class CombateService {
+       + calcularDanio()
+       + aplicarVentajaTipo()
+       + validarKO()
+   }
+
+
+   class EfectoService {
+       + aplicarBuff()
+       + aplicarDebuff()
+       + aplicarEstado()
+   }
+
+
+   class IAService {
+       + elegirMovimiento()
+   }
+}
+
+
+CombateService --> Carta
+EfectoService --> Carta
+IAService --> Jugador
+
+
+JuegoController --> CombateService
+JuegoController --> EfectoService
+JuegoController --> IAService
+
+
+' =========================
+'      PERSISTENCE
+' =========================
+
+
+package "persistence.connection" {
+
+
+   class ConexionBD {
+       - url : String
+       - user : String
+       - password : String
+
+
+       + getConnection() : Connection
+       + cerrarConexion()
+   }
+}
+
+
+package "persistence.dao" {
+
+
+   interface CartaDAO {
+       + guardarCarta(c : Carta)
+       + obtenerCarta(id : int)
+       + listarCartas()
+       + eliminarCarta(id : int)
+   }
+
+
+   interface JugadorDAO {
+       + guardarJugador(j : Jugador)
+       + obtenerJugador(id : int)
+   }
+
+
+   interface PartidaDAO {
+       + guardarPartida(p : Partida)
+       + cargarPartida(id : int)
+   }
+
+
+   interface MazoDAO {
+       + guardarMazo(m : Mazo)
+       + cargarMazo(id : int)
+   }
+}
+
+
+package "persistence.impl" {
+
+
+   class CartaDAOImpl
+   class JugadorDAOImpl
+   class PartidaDAOImpl
+   class MazoDAOImpl
+}
+
+
+CartaDAOImpl ..|> CartaDAO
+JugadorDAOImpl ..|> JugadorDAO
+PartidaDAOImpl ..|> PartidaDAO
+MazoDAOImpl ..|> MazoDAO
+
+
+CartaDAOImpl --> ConexionBD
+JugadorDAOImpl --> ConexionBD
+PartidaDAOImpl --> ConexionBD
+MazoDAOImpl --> ConexionBD
+
+
+@enduml
+@startuml
+
+
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+
+
+' =========================
+'        MODEL
+' =========================
+package "model" {
+
+
+   enum TipoCarta {
+       Bucle
+       Excepcion
+       Hilo
+       Objeto
+       Recursivo
+       BaseDeDatos
+       Memoria
+       Red
+       Compilador
+   }
+
+
+   enum Rareza {
+       Comun
+       Rara
+       Epica
+       Legendaria
+   }
+
+
+   class Carta {
+       - nombre : String
+       - tipo : TipoCarta
+       - rareza : Rareza
+       - atk : int
+       - def : int
+       - spd : int
+       - vida : int
+       - ataques : List<Ataque>
+
+
+       + usarAtaque()
+       + recibirDanio()
+       + aplicarBuff()
+   }
+
+
+   class Ataque {
+       - nombre : String
+       - descripcion : String
+       - danio : int
+       - efectoEspecial : String
+
+
+       + ejecutar()
+   }
+
+
+   class Jugador {
+       - nombre : String
+       - mazo : Mazo
+       - mano : List<Carta>
+
+
+       + robarCarta()
+       + jugarCarta()
+   }
+
+
+   class Mazo {
+       - cartas : List<Carta>
+
+
+       + barajar()
+       + sacarCarta()
+   }
+
+
+   class Partida {
+       - jugador1 : Jugador
+       - jugador2 : Jugador
+       - turnoActual : int
+
+
+       + iniciar()
+       + finalizarTurno()
+       + verificarGanador()
+   }
+
+
+   Carta "1" *-- "*" Ataque
+   Jugador "1" *-- "1" Mazo
+   Jugador "1" o-- "*" Carta
+   Partida --> Jugador
+}
+
+
+' =========================
+'      CONTROLLER
+' =========================
+package "controller" {
+
+
+   class JuegoController {
+       - partida : Partida
+
+
+       + iniciarJuego()
+       + procesarTurno()
+       + usarAtaque()
+   }
+
+
+   class CartaController {
+       + crearCarta()
+       + activarEfecto()
+   }
+
+
+   class TurnoController {
+       + siguienteTurno()
+       + validarVelocidad()
+   }
+}
+
+
+JuegoController --> Partida
+CartaController --> Carta
+TurnoController --> Partida
+
+
+' =========================
+'         VIEW
+' =========================
+package "view" {
+
+
+   class MenuPrincipalView {
+       + mostrarMenu()
+   }
+
+
+   class JuegoView {
+       + mostrarTablero()
+       + mostrarCarta()
+       + mostrarAtaques()
+   }
+
+
+   class ResultadoView {
+       + mostrarGanador()
+   }
+}
+
+
+MenuPrincipalView --> JuegoController
+JuegoView --> JuegoController
+ResultadoView --> JuegoController
+
+
+' =========================
+'        SERVICE
+' =========================
+package "service" {
+
+
+   class CombateService {
+       + calcularDanio()
+       + aplicarVentajaTipo()
+       + validarKO()
+   }
+
+
+   class EfectoService {
+       + aplicarBuff()
+       + aplicarDebuff()
+       + aplicarEstado()
+   }
+
+
+   class IAService {
+       + elegirMovimiento()
+   }
+}
+
+
+CombateService --> Carta
+EfectoService --> Carta
+IAService --> Jugador
+
+
+JuegoController --> CombateService
+JuegoController --> EfectoService
+JuegoController --> IAService
+
+
+' =========================
+'      PERSISTENCE
+' =========================
+
+
+package "persistence.connection" {
+
+
+   class ConexionBD {
+       - url : String
+       - user : String
+       - password : String
+
+
+       + getConnection() : Connection
+       + cerrarConexion()
+   }
+}
+
+
+package "persistence.dao" {
+
+
+   interface CartaDAO {
+       + guardarCarta(c : Carta)
+       + obtenerCarta(id : int)
+       + listarCartas()
+       + eliminarCarta(id : int)
+   }
+
+
+   interface JugadorDAO {
+       + guardarJugador(j : Jugador)
+       + obtenerJugador(id : int)
+   }
+
+
+   interface PartidaDAO {
+       + guardarPartida(p : Partida)
+       + cargarPartida(id : int)
+   }
+
+
+   interface MazoDAO {
+       + guardarMazo(m : Mazo)
+       + cargarMazo(id : int)
+   }
+}
+
+
+package "persistence.impl" {
+
+
+   class CartaDAOImpl
+   class JugadorDAOImpl
+   class PartidaDAOImpl
+   class MazoDAOImpl
+}
+
+
+CartaDAOImpl ..|> CartaDAO
+JugadorDAOImpl ..|> JugadorDAO
+PartidaDAOImpl ..|> PartidaDAO
+MazoDAOImpl ..|> MazoDAO
+
+
+CartaDAOImpl --> ConexionBD
+JugadorDAOImpl --> ConexionBD
+PartidaDAOImpl --> ConexionBD
+MazoDAOImpl --> ConexionBD
+
+
+@enduml
