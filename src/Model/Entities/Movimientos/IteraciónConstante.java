@@ -1,5 +1,7 @@
 package Model.Entities.Movimientos;
 
+import Model.Entities.Cartas.Carta;
+
 public class IteraciónConstante extends Movimiento {
 
     public IteraciónConstante(){
@@ -7,7 +9,7 @@ public class IteraciónConstante extends Movimiento {
     }
 
     @Override
-    public void usar(){
+    public void usar(Carta aliada,Carta enemigo){
         //Defines el codigo
     }
 }

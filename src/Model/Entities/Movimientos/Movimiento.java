@@ -1,5 +1,8 @@
 package Model.Entities.Movimientos;
 
+
+import Model.Entities.Cartas.Carta;
+
 public abstract class Movimiento {
     private String nombre;
 
@@ -7,7 +10,8 @@ public abstract class Movimiento {
         this.nombre = nombre;
     }
 
-    public void usar(){
+    public void usar(Carta aliado,Carta enemigo){
 
     }
+
 }

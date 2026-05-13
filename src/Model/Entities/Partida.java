@@ -3,26 +3,18 @@ package Model.Entities;
 public class Partida {
     private Jugador jugador1;
     private Jugador jugador2;
-    private int turnoActual;
+    private int turnos;
+    private Jugador turnoActual;
 
-    public Partida(Jugador jugador1, Jugador jugador2, int turnoActual) {
+    public Partida(Jugador jugador1, Jugador jugador2) {
         this.jugador1 = jugador1;
         this.jugador2 = jugador2;
-        this.turnoActual = turnoActual;
+        this.turnos = turnos;
+        this.turnoActual = jugador1;
     }
+    //Metodos
 
-    public void iniciar(){
-        
-    }
-    
-    public void finalizarTurno(){
-        
-    }
-    
-    public void verificarGanador(){
-        
-    }
-    
+    //Getters and Setters
     public Jugador getJugador1() {
         return jugador1;
     }
@@ -39,11 +31,19 @@ public class Partida {
         this.jugador2 = jugador2;
     }
 
-    public int getTurnoActual() {
+    public int getTurnos() {
+        return turnos;
+    }
+
+    public void setTurnos(int turnos) {
+        this.turnos = turnos;
+    }
+
+    public Jugador getTurnoActual() {
         return turnoActual;
     }
 
-    public void setTurnoActual(int turnoActual) {
+    public void setTurnoActual(Jugador turnoActual) {
         this.turnoActual = turnoActual;
     }
 }

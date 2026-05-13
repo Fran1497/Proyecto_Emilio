@@ -1,40 +1,43 @@
-
-
 package Model.Entities.Cartas;
 
 import Model.Entities.Movimientos.Movimiento;
 import Model.Entities.Rareza;
 import Model.Entities.TipoCarta;
 
+import java.util.Arrays;
+
 public abstract class Carta {
 
-    //Atributos base
-    private int id;
     private String nombre;
-    private Rareza rareza;
+    private int id;
     private TipoCarta tipo;
+    private Rareza rareza;
+    private String asset;
 
+    //Stats Base
+    private int hpBase;
+    private int atkBase;
+    private int defBase;
+    private int spdBase;
 
-    // ===== STATS BASE =====
-    private final int hpBase;
-    private final int atkBase;
-    private final int defBase;
-    private final int spdBase;
+    //Stats Actuales
 
-    // ===== STATS ACTUALES =====
     private int hpActual;
     private int atkActual;
     private int defActual;
     private int spdActual;
 
+    //Movimientos
     public Movimiento[] movimientos;
 
-    public Carta(int hp,int atk, int def, int spd,Rareza rareza,TipoCarta tipo) {
 
+    public Carta(String nombre, int hp, int atk, int def, int spd,TipoCarta tipo,Rareza rareza,String asset) {
+        this.nombre = nombre;
+        this.hpBase = hp;
         this.atkBase = atk;
         this.defBase = def;
         this.spdBase = spd;
-        this.hpBase = hp;
+
 
         // al iniciar combate
         this.atkActual = atk;
@@ -46,43 +49,37 @@ public abstract class Carta {
 
         this.rareza = rareza;
         this.tipo = tipo;
-        
-    }
 
-    // ===== RESET =====
+        this.asset = asset; //Aqui tendra que venir la ruta de donde esta el asset de la carta
+
+        restaurarStats();
+    }
     public void restaurarStats() {
+        setHpActual(hpBase);
         atkActual = atkBase;
         defActual = defBase;
         spdActual = spdBase;
     }
 
-    @Override
-    public String toString() {
-        return "Carta{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", rareza=" + rareza +
-                ", tipo=" + tipo +
-                ", atkBase=" + atkBase +
-                ", defBase=" + defBase +
-                ", spdBase=" + spdBase +
-                ", atkActual=" + atkActual +
-                ", defActual=" + defActual +
-                ", spdActual=" + spdActual +
-                '}';
-    }
-    public int getHpBase(){
-        return hpBase;
-    }
-     public int getHpAct() {
-        return hpActual;
-    }
-    public int getId() {
-        return id;
+    //<------Getters and Setters----->
+    public boolean estaVivo() {
+        return hpActual > 0;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setHpActual(int hpActual) {
+        // mínimo 0
+        if (hpActual < 0) {
+            this.hpActual = 0;
+        }
+
+        // máximo hpBase
+        else if (hpActual > hpBase) {
+            this.hpActual = hpBase;
+        }
+
+        else {
+            this.hpActual = hpActual;
+        }
     }
 
     public String getNombre() {
@@ -93,32 +90,60 @@ public abstract class Carta {
         this.nombre = nombre;
     }
 
-    public Rareza getRareza() {
-        return rareza;
+    public int getId() {
+        return id;
     }
 
-    public void setRareza(Rareza rareza) {
-        this.rareza = rareza;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public TipoCarta getTipo() {
-        return tipo;
+    public String getTipo() {
+        return tipo.toString();
     }
 
     public void setTipo(TipoCarta tipo) {
         this.tipo = tipo;
     }
 
+    public String getRareza() {
+        return rareza.toString();
+    }
+
+    public void setRareza(Rareza rareza) {
+        this.rareza = rareza;
+    }
+
+    public String getAsset() {
+        return asset;
+    }
+
+    public void setAsset(String asset) {
+        this.asset = asset;
+    }
+
     public int getAtkBase() {
         return atkBase;
+    }
+
+    public void setAtkBase(int atkBase) {
+        this.atkBase = atkBase;
     }
 
     public int getDefBase() {
         return defBase;
     }
 
+    public void setDefBase(int defBase) {
+        this.defBase = defBase;
+    }
+
     public int getSpdBase() {
         return spdBase;
+    }
+
+    public void setSpdBase(int spdBase) {
+        this.spdBase = spdBase;
     }
 
     public int getAtkActual() {
@@ -143,5 +168,46 @@ public abstract class Carta {
 
     public void setSpdActual(int spdActual) {
         this.spdActual = spdActual;
+    }
+
+    public Movimiento[] getMovimientos() {
+        return movimientos;
+    }
+
+    public void setMovimientos(Movimiento[] movimientos) {
+        this.movimientos = movimientos;
+    }
+
+    @Override
+    public String toString() {
+        return "Carta{" +
+                "nombre='" + nombre + '\'' +
+                ", id=" + id +
+                ", tipo=" + tipo +
+                ", rareza=" + rareza +
+                ", asset='" + asset + '\'' +
+                ", hpBase=" + hpBase +
+                ", atkBase=" + atkBase +
+                ", defBase=" + defBase +
+                ", spdBase=" + spdBase +
+                ", hpActual=" + hpActual +
+                ", atkActual=" + atkActual +
+                ", defActual=" + defActual +
+                ", spdActual=" + spdActual +
+                ", movimientos=" + Arrays.toString(movimientos) +
+                '}';
+    }
+
+
+    public int getHpBase() {
+        return hpBase;
+    }
+
+    public void setHpBase(int hpBase) {
+        this.hpBase = hpBase;
+    }
+
+    public int getHpActual() {
+        return hpActual;
     }
 }
