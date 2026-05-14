@@ -1,6 +1,7 @@
 package Model.Persistence.Impl;
 
 import Model.Entities.Cartas.Carta;
+import Model.Entities.Movimientos.*;
 import Model.Entities.Rareza;
 import Model.Entities.TipoCarta;
 import Model.Entities.mazos;
@@ -13,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DAOImpl implements DAO {
+
     private static final String URL = "jdbc:postgresql://localhost:5432/Database_Dual";
     private static final String usuario = "postgres";
     private static final String password = "root";
@@ -29,30 +31,31 @@ public class DAOImpl implements DAO {
         return conexion;
     }
 
-
     @Override
     public int insertarCartas(Carta car) {
 
         int filas = 0;
 
-        try (Connection conexion = getConexion()) {
+        String sql = "INSERT INTO dual.Carta " +
+                "(nombre, tipo, rareza, asset, hp_base, atk_base, def_base, spd_base, movimiento1, movimiento2) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-            String sql = "INSERT INTO Dual.cartas (nombre, tipo, rareza, asset, hp_base, atk_base, def_base, spd_base) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-            PreparedStatement ps = conexion.prepareStatement(sql);
+        try (Connection conexion = getConexion();
+             PreparedStatement ps = conexion.prepareStatement(sql)) {
 
             ps.setString(1, car.getNombre());
-            ps.setString(2, car.getTipo());      // Enum → String
-            ps.setString(3, car.getRareza());    // Enum → String
+            ps.setString(2, car.getTipo());
+            ps.setString(3, car.getRareza());
             ps.setString(4, car.getAsset());
             ps.setInt(5, car.getHpBase());
             ps.setInt(6, car.getAtkBase());
             ps.setInt(7, car.getDefBase());
             ps.setInt(8, car.getSpdBase());
 
+            ps.setString(9, car.getMovimientos()[0].getNombre());
+            ps.setString(10, car.getMovimientos()[1].getNombre());
+
             filas = ps.executeUpdate();
-            ps.close();
 
         } catch (SQLException ex) {
             Logger.getLogger(DAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -68,27 +71,22 @@ public class DAOImpl implements DAO {
         try (Connection conexion = getConexion()) {
 
             Statement sentencia = conexion.createStatement();
-            ResultSet rs = sentencia.executeQuery("SELECT * FROM Dual.cartas;");
+            ResultSet rs = sentencia.executeQuery("SELECT * FROM dual.Carta;");
 
             while (rs.next()) {
 
-                int id = rs.getInt("id");
-                String nombre = rs.getString("nombre");
-                String tipo = rs.getString("tipo");
-                String rareza = rs.getString("rareza");
-                String asset = rs.getString("asset");
-                int hp = rs.getInt("hp_base");
-                int atk = rs.getInt("atk_base");
-                int def = rs.getInt("def_base");
-                int spd = rs.getInt("spd_base");
+                Carta car = new Carta(
+                        rs.getString("nombre"),
+                        rs.getInt("hp_base"),
+                        rs.getInt("atk_base"),
+                        rs.getInt("def_base"),
+                        rs.getInt("spd_base"),
+                        TipoCarta.valueOf(rs.getString("tipo")),
+                        Rareza.valueOf(rs.getString("rareza")),
+                        rs.getString("asset")
+                ) {};
 
-                // Crear una carta concreta usando clase anónima
-                Carta car = new Carta(nombre, hp, atk, def, spd,
-                        TipoCarta.valueOf(tipo),
-                        Rareza.valueOf(rareza),
-                        asset) {};
-
-                car.setId(id);
+                car.setId(rs.getInt("id"));
 
                 lista.add(car);
             }
@@ -138,7 +136,8 @@ public class DAOImpl implements DAO {
 
         String sql =
                 "SELECT Carta.id, Carta.nombre, Carta.tipo, Carta.rareza, Carta.asset, " +
-                        "Carta.hp_base, Carta.atk_base, Carta.def_base, Carta.spd_base " +
+                        "Carta.hp_base, Carta.atk_base, Carta.def_base, Carta.spd_base, " +
+                        "Carta.movimiento1, Carta.movimiento2 " +
                         "FROM dual.Carta " +
                         "JOIN dual.mazo_cartas ON Carta.id = mazo_cartas.id_carta " +
                         "WHERE mazo_cartas.id_mazo = ?";
@@ -165,6 +164,16 @@ public class DAOImpl implements DAO {
 
                     carta.setId(rs.getInt("id"));
 
+                    // Reflection para instanciar movimientos reales
+                    String mov1 = rs.getString("movimiento1");
+                    String mov2 = rs.getString("movimiento2");
+
+                    Movimiento[] movs = new Movimiento[2];
+                    movs[0] = MovimientoFactory.crearMovimientoDesdeNombre(mov1);
+                    movs[1] = MovimientoFactory.crearMovimientoDesdeNombre(mov2);
+
+                    carta.setMovimientos(movs);
+
                     cartas.add(carta);
                 }
             }
@@ -175,6 +184,7 @@ public class DAOImpl implements DAO {
 
         return cartas;
     }
+
     @Override
     public int insertarCartaEnMazo(int idMazo, int idCarta) {
 
@@ -192,8 +202,7 @@ public class DAOImpl implements DAO {
 
         } catch (SQLException ex) {
 
-            // Si intenta meter una carta duplicada en el mismo mazo
-            if (ex.getSQLState().equals("23505")) {
+            if ("23505".equals(ex.getSQLState())) {
                 System.out.println("La carta ya está en este mazo.");
             } else {
                 Logger.getLogger(DAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -202,6 +211,7 @@ public class DAOImpl implements DAO {
 
         return filas;
     }
+
     @Override
     public int insertarMazo(mazos m) {
 
@@ -217,7 +227,7 @@ public class DAOImpl implements DAO {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     idGenerado = rs.getInt("id");
-                    m.setId(idGenerado); // opcional, pero útil
+                    m.setId(idGenerado);
                 }
             }
 
@@ -227,13 +237,4 @@ public class DAOImpl implements DAO {
 
         return idGenerado;
     }
-
-
-
-
-
-
-
-
-
 }

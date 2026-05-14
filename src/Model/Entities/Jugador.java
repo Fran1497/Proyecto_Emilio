@@ -10,30 +10,47 @@ public class Jugador {
 
     private String nombre;
     private int monedas;
-    private Carta[] mazo; //Las cartas disponibles en el mazo
+    private mazos mazo; //Las cartas disponibles en el mazo
     private Carta[] mano; //Las cartas que puede jugar
 
 
     public Jugador(String nombre) {
         this.nombre = nombre;
-        this.mazo = new Carta[tamaMazo];
+        this.mazo = new mazos();
         this.mano = new Carta[2];
         this.monedas = 100;
     }
 
     //Metodos
-    public boolean jugarCarta(int slotmano,int slotmazo) {
-        if ((slotmano >= 0 && slotmano < mano.length) && (slotmazo >= 0 && slotmazo < mazo.length)) {
-            Carta jugada = mazo[slotmazo];
-            mano[slotmano] = jugada;
+    public void sacarCartas(){
+        mano[0]=mazo.getCartas().get(0);
+        mano[1]=mazo.getCartas().get(1);
+    }
+
+    //Añade monedas al jugado
+    public void añadirMonedas(int cantidad){
+        monedas += cantidad;
+    }
+
+    //Saca una carta del mazo a la mano principal
+    public boolean jugarCarta(int slotmano, int slotmazo, Partida p){
+        if (comprobarSlots(slotmano, slotmazo, p)){
+            Carta temporal = mano[slotmano];
+            mano[slotmano] = mazo.getCartas().get(slotmazo);
+            mazo.getCartas().set(slotmazo,temporal);
             return true;
         }
         return false;
     }
 
-    public void añadirMonedas(int cantidad){
-        monedas += cantidad;
+    //Comprobamos si el jugador pueda usar ese slot
+    public boolean comprobarSlots(int slotmano,int slotmazo,Partida p){
+        return ((slotmano >= 0 && slotmano < mano.length) && (slotmazo >= 0 && slotmazo < p.getTamanioMazos()));
     }
+
+
+
+    //Hace que el jugado eliga la carta de su mano
     //Getters and Setters
     public String getNombre() {
         return nombre;
@@ -51,11 +68,19 @@ public class Jugador {
         Jugador.tamaMazo = tamaMazo;
     }
 
-    public Carta[] getMazo() {
+    public int getMonedas() {
+        return monedas;
+    }
+
+    public void setMonedas(int monedas) {
+        this.monedas = monedas;
+    }
+
+    public mazos getMazo() {
         return mazo;
     }
 
-    public void setMazo(Carta[] mazo) {
+    public void setMazo(mazos mazo) {
         this.mazo = mazo;
     }
 

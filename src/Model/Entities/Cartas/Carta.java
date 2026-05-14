@@ -60,6 +60,17 @@ public abstract class Carta {
         defActual = defBase;
         spdActual = spdBase;
     }
+    //Metodos
+
+    //Hace que la carta pueda usar un movimiento sobre otra carta
+    public boolean usarAtaque(int slot,Carta enemigo){
+        if (slot >= 0 && slot < movimientos.length){
+            this.movimientos[slot].usar(this, enemigo); //Usa la logica que tenga el movimiento
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     //<------Getters and Setters----->
     public boolean estaVivo() {

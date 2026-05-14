@@ -5,7 +5,7 @@ import Model.Entities.Cartas.Carta;
 public class IteraciónConstante extends Movimiento {
 
     public IteraciónConstante(){
-        super("IteraciónConstante");
+        super("IteracionConstante");
     }
 
     @Override

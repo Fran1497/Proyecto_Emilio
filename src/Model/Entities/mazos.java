@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class mazos {
-
     private int id;
     private String nombre;
     private LocalDateTime fechaCreacion;
@@ -26,22 +25,14 @@ public class mazos {
         this.cartas = new ArrayList<>(cartas);
     }
 
-    // Añadir carta al mazo
+
+    // Añadir cartas al mazo
     public void agregarCarta(Carta carta) {
         this.cartas.add(carta);
     }
 
-    // Barajar el mazo
-    public void barajar() {
-        Collections.shuffle(cartas);
-    }
-
-    // Sacar la primera carta del mazo
-    public Carta sacarCarta() {
-        if (cartas.isEmpty()) {
-            return null;
-        }
-        return cartas.remove(0);
+    public Carta seleccionarCarta(int slot){
+        return cartas.get(slot);
     }
 
     // Getters y Setters

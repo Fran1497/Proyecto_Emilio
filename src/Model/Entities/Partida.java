@@ -5,6 +5,8 @@ public class Partida {
     private Jugador jugador2;
     private int turnos;
     private Jugador turnoActual;
+    private int tamanioMazos;
+
 
     public Partida(Jugador jugador1, Jugador jugador2) {
         this.jugador1 = jugador1;
@@ -13,6 +15,12 @@ public class Partida {
         this.turnoActual = jugador1;
     }
     //Metodos
+    public void iniciar(){
+
+    }
+    public void finalizarTurno(){
+        turnos++;
+    }
 
     //Getters and Setters
     public Jugador getJugador1() {
@@ -45,5 +53,13 @@ public class Partida {
 
     public void setTurnoActual(Jugador turnoActual) {
         this.turnoActual = turnoActual;
+    }
+
+    public int getTamanioMazos() {
+        return tamanioMazos;
+    }
+
+    public void setTamanioMazos(int tamanioMazos) {
+        this.tamanioMazos = tamanioMazos;
     }
 }
