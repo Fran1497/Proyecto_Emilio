@@ -18,4 +18,8 @@ public interface DAO {
     int insertarCartaEnMazo(int idMazo, int idCarta);
 
     int insertarMazo(mazos m);
+
+    Carta obtenerCartaPorId(int id);
+
+    List<Carta> obtenerCartasPorRareza(String rareza);
 }
