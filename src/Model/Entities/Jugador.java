@@ -12,6 +12,7 @@ public class Jugador {
     private int monedas;
     private mazos mazo; //Las cartas disponibles en el mazo
     private Carta[] mano; //Las cartas que puede jugar
+    boolean esJugador1;
 
 
     public Jugador(String nombre) {
@@ -47,7 +48,6 @@ public class Jugador {
     public boolean comprobarSlots(int slotmano, int slotmazo, Partida p) {
         return ((slotmano >= 0 && slotmano < mano.length) && (slotmazo >= 0 && slotmazo < p.getTamanioMazos()));
     }
-
 
     //Hace que el jugado eliga la carta de su mano
     //Getters and Setters
@@ -89,6 +89,14 @@ public class Jugador {
 
     public void setMano(Carta[] mano) {
         this.mano = mano;
+    }
+
+    public boolean isEsJugador1() {
+        return esJugador1;
+    }
+
+    public void setEsJugador1(boolean esJugador1) {
+        this.esJugador1 = esJugador1;
     }
 
     @Override

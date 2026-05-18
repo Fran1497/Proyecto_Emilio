@@ -19,16 +19,16 @@ public class MenuInicialMain extends JFrame {
     static class PanelMenu extends JPanel {
 
         private final String nombre;
-        private final int    dinero;
+        private final int dinero;
 
-        private final Color fondo        = new Color(0x1F1F23);
-        private final Color madera       = new Color(0xA07850);
+        private final Color fondo = new Color(0x1F1F23);
+        private final Color madera = new Color(0xA07850);
         private final Color maderaOscura = new Color(0x7A5C38);
-        private final Color maderaClara  = new Color(0xC09A6A);
-        private final Color verdeOscuro  = new Color(0x0A4A0A);
-        private final Color verdeMedio   = new Color(0x0D6B0D);
-        private final Color verdeClaro   = new Color(0x1A8A1A);
-        private final Color cuerda       = new Color(0x8B7355);
+        private final Color maderaClara = new Color(0xC09A6A);
+        private final Color verdeOscuro = new Color(0x0A4A0A);
+        private final Color verdeMedio = new Color(0x0D6B0D);
+        private final Color verdeClaro = new Color(0x1A8A1A);
+        private final Color cuerda = new Color(0x8B7355);
 
         // Áreas de clic de los tres carteles (se recalculan en cada paint)
         private Polygon areaIzquierda;
@@ -58,9 +58,9 @@ public class MenuInicialMain extends JFrame {
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g;
 
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,     RenderingHints.VALUE_ANTIALIAS_ON);
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-            g2.setRenderingHint(RenderingHints.KEY_RENDERING,         RenderingHints.VALUE_RENDER_QUALITY);
+            g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
             int w = getWidth();
             int h = getHeight();
@@ -76,7 +76,7 @@ public class MenuInicialMain extends JFrame {
 
             g2.setColor(cuerda);
             g2.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-            g2.drawLine(tituloX + 50,           0, tituloX + 50,           tituloY);
+            g2.drawLine(tituloX + 50, 0, tituloX + 50, tituloY);
             g2.drawLine(tituloX + tituloW - 50, 0, tituloX + tituloW - 50, tituloY);
             g2.setStroke(new BasicStroke(1));
 
@@ -91,8 +91,8 @@ public class MenuInicialMain extends JFrame {
         }
 
         private void dibujarCesped(Graphics2D g2, int w, int h) {
-            int groundY  = (int)(h * 0.72);
-            int ellipseH = (int)(h * 0.55);
+            int groundY = (int) (h * 0.72);
+            int ellipseH = (int) (h * 0.55);
 
             g2.setColor(verdeOscuro);
             g2.fill(new Ellipse2D.Double(-w * 0.25, groundY, w * 1.5, ellipseH));
@@ -111,12 +111,12 @@ public class MenuInicialMain extends JFrame {
             Color hierbaOscura = new Color(0x055005);
 
             int[][] posiciones = {
-                {55, 20}, {160, 22}, {270, 18}, {w/2 - 130, 20}, {w/2 - 20, 19},
-                {w/2 + 110, 21}, {w - 260, 19}, {w - 155, 22}, {w - 55, 20},
-                {100, 68}, {240, 62}, {410, 66}, {w/2 - 70, 65},
-                {w/2 + 90, 67}, {w - 400, 64}, {w - 240, 69}, {w - 100, 66},
-                {180, 140}, {w/2 - 30, 135}, {w/2 + 120, 140},
-                {w - 370, 138}, {w - 180, 142}
+                    {55, 20}, {160, 22}, {270, 18}, {w / 2 - 130, 20}, {w / 2 - 20, 19},
+                    {w / 2 + 110, 21}, {w - 260, 19}, {w - 155, 22}, {w - 55, 20},
+                    {100, 68}, {240, 62}, {410, 66}, {w / 2 - 70, 65},
+                    {w / 2 + 90, 67}, {w - 400, 64}, {w - 240, 69}, {w - 100, 66},
+                    {180, 140}, {w / 2 - 30, 135}, {w / 2 + 120, 140},
+                    {w - 370, 138}, {w - 180, 142}
             };
 
             g2.setStroke(new BasicStroke(3.5f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
@@ -128,9 +128,9 @@ public class MenuInicialMain extends JFrame {
 
         private void dibujarHierbajo(Graphics2D g2, int x, int y, Color color, int alto) {
             g2.setColor(color);
-            g2.drawLine(x,      y, x - 7,  y - (int)(alto * 0.78));
-            g2.drawLine(x + 7,  y, x + 7,  y - alto);
-            g2.drawLine(x + 14, y, x + 21, y - (int)(alto * 0.72));
+            g2.drawLine(x, y, x - 7, y - (int) (alto * 0.78));
+            g2.drawLine(x + 7, y, x + 7, y - alto);
+            g2.drawLine(x + 14, y, x + 21, y - (int) (alto * 0.72));
         }
 
         private void dibujarHierbajoBase(Graphics2D g2, int paloX, int groundY) {
@@ -143,7 +143,7 @@ public class MenuInicialMain extends JFrame {
 
             g2.setStroke(new BasicStroke(7f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             dibujarHierbajo(g2, paloX - 25, groundY + 22, verdeClaro, 44);
-            dibujarHierbajo(g2, paloX - 6,  groundY + 18, verdeClaro, 50);
+            dibujarHierbajo(g2, paloX - 6, groundY + 18, verdeClaro, 50);
             dibujarHierbajo(g2, paloX + 14, groundY + 22, verdeClaro, 46);
             dibujarHierbajo(g2, paloX + 32, groundY + 24, verdeClaro, 40);
             g2.setStroke(new BasicStroke(1));
@@ -167,9 +167,9 @@ public class MenuInicialMain extends JFrame {
             }
             g2.setStroke(new BasicStroke(1));
 
-            dibujarClavo(g2, x + 50,     y + 10);
+            dibujarClavo(g2, x + 50, y + 10);
             dibujarClavo(g2, x + w - 50, y + 10);
-            dibujarClavo(g2, x + 50,     y + h - 10);
+            dibujarClavo(g2, x + 50, y + h - 10);
             dibujarClavo(g2, x + w - 50, y + h - 10);
 
             g2.setColor(Color.WHITE);
@@ -177,8 +177,8 @@ public class MenuInicialMain extends JFrame {
             FontMetrics fm = g2.getFontMetrics();
             String titulo = "DAM-DUEL";
             g2.drawString(titulo,
-                x + (w - fm.stringWidth(titulo)) / 2,
-                y + (h + fm.getAscent() - fm.getDescent()) / 2);
+                    x + (w - fm.stringWidth(titulo)) / 2,
+                    y + (h + fm.getAscent() - fm.getDescent()) / 2);
         }
 
         private void dibujarClavo(Graphics2D g2, int cx, int cy) {
@@ -221,32 +221,32 @@ public class MenuInicialMain extends JFrame {
             FontMetrics fm = g2.getFontMetrics();
             String letter = "J";
             g2.drawString(letter,
-                x + (size - fm.stringWidth(letter)) / 2,
-                y + (size + fm.getAscent() - fm.getDescent()) / 2 - 1);
+                    x + (size - fm.stringWidth(letter)) / 2,
+                    y + (size + fm.getAscent() - fm.getDescent()) / 2 - 1);
         }
 
         private void dibujarCartelFlecha(Graphics2D g2, int w, int h, boolean izquierda) {
             AffineTransform old = g2.getTransform();
 
-            int groundY = (int)(h * 0.72);
+            int groundY = (int) (h * 0.72);
 
             int cx, cy;
             double angulo;
 
             if (izquierda) {
-                cx     = (int)(w * 0.28);
-                cy     = (int)(h * 0.38);
+                cx = (int) (w * 0.28);
+                cy = (int) (h * 0.38);
                 angulo = Math.toRadians(6);
             } else {
-                cx     = (int)(w * 0.72);
-                cy     = (int)(h * 0.38);
+                cx = (int) (w * 0.72);
+                cy = (int) (h * 0.38);
                 angulo = Math.toRadians(-6);
             }
 
             g2.rotate(angulo, cx, cy);
 
-            int paloX      = cx - 9;
-            int paloTop    = cy + 40;
+            int paloX = cx - 9;
+            int paloTop = cy + 40;
             int paloBottom = groundY + 35;
 
             g2.setColor(maderaOscura);
@@ -262,8 +262,8 @@ public class MenuInicialMain extends JFrame {
 
             dibujarHierbajoBase(g2, paloX, groundY);
 
-            int fw    = 260;
-            int fh    = 80;
+            int fw = 260;
+            int fh = 80;
             int punta = 35;
 
             g2.setColor(new Color(0, 0, 0, 80));
@@ -286,7 +286,7 @@ public class MenuInicialMain extends JFrame {
             g2.setColor(maderaOscura);
             g2.setStroke(new BasicStroke(1.2f));
             for (int i = 1; i < 4; i++) {
-                int vy  = cy - fh / 2 + (fh / 4) * i;
+                int vy = cy - fh / 2 + (fh / 4) * i;
                 int fx1 = izquierda ? cx - fw / 2 + punta : cx - fw / 2;
                 int fx2 = izquierda ? cx + fw / 2 : cx + fw / 2 - punta;
                 g2.drawLine(fx1 + 5, vy, fx2 - 5, vy);
@@ -294,15 +294,15 @@ public class MenuInicialMain extends JFrame {
             g2.setStroke(new BasicStroke(1));
 
             if (izquierda) {
-                dibujarClavo(g2, cx - fw/2 + punta + 15, cy - fh/4);
-                dibujarClavo(g2, cx + fw/2 - 15,         cy - fh/4);
-                dibujarClavo(g2, cx - fw/2 + punta + 15, cy + fh/4);
-                dibujarClavo(g2, cx + fw/2 - 15,         cy + fh/4);
+                dibujarClavo(g2, cx - fw / 2 + punta + 15, cy - fh / 4);
+                dibujarClavo(g2, cx + fw / 2 - 15, cy - fh / 4);
+                dibujarClavo(g2, cx - fw / 2 + punta + 15, cy + fh / 4);
+                dibujarClavo(g2, cx + fw / 2 - 15, cy + fh / 4);
             } else {
-                dibujarClavo(g2, cx - fw/2 + 15,         cy - fh/4);
-                dibujarClavo(g2, cx + fw/2 - punta - 15, cy - fh/4);
-                dibujarClavo(g2, cx - fw/2 + 15,         cy + fh/4);
-                dibujarClavo(g2, cx + fw/2 - punta - 15, cy + fh/4);
+                dibujarClavo(g2, cx - fw / 2 + 15, cy - fh / 4);
+                dibujarClavo(g2, cx + fw / 2 - punta - 15, cy - fh / 4);
+                dibujarClavo(g2, cx - fw / 2 + 15, cy + fh / 4);
+                dibujarClavo(g2, cx + fw / 2 - punta - 15, cy + fh / 4);
             }
 
             g2.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 26));
@@ -329,30 +329,30 @@ public class MenuInicialMain extends JFrame {
             int ym = cy + oy;
 
             if (izquierda) {
-                p.addPoint(x0,         ym);
+                p.addPoint(x0, ym);
                 p.addPoint(x0 + punta, y0);
-                p.addPoint(x1,         y0);
-                p.addPoint(x1,         y1);
+                p.addPoint(x1, y0);
+                p.addPoint(x1, y1);
                 p.addPoint(x0 + punta, y1);
             } else {
-                p.addPoint(x0,         y0);
+                p.addPoint(x0, y0);
                 p.addPoint(x1 - punta, y0);
-                p.addPoint(x1,         ym);
+                p.addPoint(x1, ym);
                 p.addPoint(x1 - punta, y1);
-                p.addPoint(x0,         y1);
+                p.addPoint(x0, y1);
             }
             return p;
         }
 
         private void dibujarCartelCentro(Graphics2D g2, int w, int h) {
-            int groundY = (int)(h * 0.72);
-            int cx      = w / 2;
+            int groundY = (int) (h * 0.72);
+            int cx = w / 2;
             int cartelW = 210;
             int cartelH = 100;
             int cartelX = cx - cartelW / 2;
-            int cartelY = (int)(h * 0.32);
+            int cartelY = (int) (h * 0.32);
 
-            int paloX   = cx - 9;
+            int paloX = cx - 9;
             int paloTop = cartelY + cartelH;
             int paloFin = groundY + 35;
 
@@ -386,9 +386,9 @@ public class MenuInicialMain extends JFrame {
             }
             g2.setStroke(new BasicStroke(1));
 
-            dibujarClavo(g2, cartelX + 12,          cartelY + 12);
+            dibujarClavo(g2, cartelX + 12, cartelY + 12);
             dibujarClavo(g2, cartelX + cartelW - 12, cartelY + 12);
-            dibujarClavo(g2, cartelX + 12,          cartelY + cartelH - 12);
+            dibujarClavo(g2, cartelX + 12, cartelY + cartelH - 12);
             dibujarClavo(g2, cartelX + cartelW - 12, cartelY + cartelH - 12);
 
             // Guardar área de clic del cartel central
