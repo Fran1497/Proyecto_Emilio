@@ -22,32 +22,31 @@ public class Jugador {
     }
 
     //Metodos
-    public void sacarCartas(){
-        mano[0]=mazo.getCartas().get(0);
-        mano[1]=mazo.getCartas().get(1);
+    public void sacarCartas() {
+        mano[0] = mazo.getCartas().get(0);
+        mano[1] = mazo.getCartas().get(1);
     }
 
     //Añade monedas al jugado
-    public void añadirMonedas(int cantidad){
+    public void añadirMonedas(int cantidad) {
         monedas += cantidad;
     }
 
     //Saca una carta del mazo a la mano principal
-    public boolean jugarCarta(int slotmano, int slotmazo, Partida p){
-        if (comprobarSlots(slotmano, slotmazo, p)){
+    public boolean jugarCarta(int slotmano, int slotmazo, Partida p) {
+        if (comprobarSlots(slotmano, slotmazo, p)) {
             Carta temporal = mano[slotmano];
             mano[slotmano] = mazo.getCartas().get(slotmazo);
-            mazo.getCartas().set(slotmazo,temporal);
+            mazo.getCartas().set(slotmazo, temporal);
             return true;
         }
         return false;
     }
 
     //Comprobamos si el jugador pueda usar ese slot
-    public boolean comprobarSlots(int slotmano,int slotmazo,Partida p){
+    public boolean comprobarSlots(int slotmano, int slotmazo, Partida p) {
         return ((slotmano >= 0 && slotmano < mano.length) && (slotmazo >= 0 && slotmazo < p.getTamanioMazos()));
     }
-
 
 
     //Hace que el jugado eliga la carta de su mano

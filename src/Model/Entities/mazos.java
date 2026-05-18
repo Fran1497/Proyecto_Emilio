@@ -31,7 +31,7 @@ public class mazos {
         this.cartas.add(carta);
     }
 
-    public Carta seleccionarCarta(int slot){
+    public Carta seleccionarCarta(int slot) {
         return cartas.get(slot);
     }
 

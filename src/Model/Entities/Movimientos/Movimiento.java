@@ -10,7 +10,7 @@ public abstract class Movimiento {
         this.nombre = nombre;
     }
 
-    public void usar(Carta aliado,Carta enemigo){
+    public void usar(Carta aliado, Carta enemigo) {
 
     }
 

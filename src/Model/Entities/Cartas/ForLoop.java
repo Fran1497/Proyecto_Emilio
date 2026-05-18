@@ -5,9 +5,9 @@ import Model.Entities.Movimientos.OverFlow;
 import Model.Entities.Rareza;
 import Model.Entities.TipoCarta;
 
-public class ForLoop extends Carta{
+public class ForLoop extends Carta {
     public ForLoop() {
-        super("ForLoop",80,40,30,20,TipoCarta.BUCLE,Rareza.COMUN,"");
+        super("ForLoop", 80, 40, 30, 20, TipoCarta.BUCLE, Rareza.COMUN, "");
 
         //Movimientos
         OverFlow mov1 = new OverFlow();

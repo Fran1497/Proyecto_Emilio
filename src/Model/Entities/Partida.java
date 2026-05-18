@@ -14,11 +14,13 @@ public class Partida {
         this.turnos = turnos;
         this.turnoActual = jugador1;
     }
+
     //Metodos
-    public void iniciar(){
+    public void iniciar() {
 
     }
-    public void finalizarTurno(){
+
+    public void finalizarTurno() {
         turnos++;
     }
 

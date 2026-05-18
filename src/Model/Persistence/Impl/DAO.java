@@ -22,4 +22,14 @@ public interface DAO {
     Carta obtenerCartaPorId(int id);
 
     List<Carta> obtenerCartasPorRareza(String rareza);
+
+    List<Carta> abrirSobreComun(int cantidad);
+
+    List<Carta> abrirSobreRaro(int cantidad);
+
+    List<Carta> abrirSobreEpico(int cantidad);
+
+    List<Carta> abrirSobreLegendario(int cantidad);
+
+    
 }

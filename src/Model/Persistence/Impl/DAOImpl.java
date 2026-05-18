@@ -8,8 +8,7 @@ import Model.Entities.mazos;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,12 +35,9 @@ public class DAOImpl implements DAO {
 
         int filas = 0;
 
-        String sql = "INSERT INTO dual.Carta " +
-                "(nombre, tipo, rareza, asset, hp_base, atk_base, def_base, spd_base, movimiento1, movimiento2) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO dual.Carta " + "(nombre, tipo, rareza, asset, hp_base, atk_base, def_base, spd_base, movimiento1, movimiento2) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conexion = getConexion();
-             PreparedStatement ps = conexion.prepareStatement(sql)) {
+        try (Connection conexion = getConexion(); PreparedStatement ps = conexion.prepareStatement(sql)) {
 
             ps.setString(1, car.getNombre());
             ps.setString(2, car.getTipo());
@@ -75,16 +71,8 @@ public class DAOImpl implements DAO {
 
             while (rs.next()) {
 
-                Carta car = new Carta(
-                        rs.getString("nombre"),
-                        rs.getInt("hp_base"),
-                        rs.getInt("atk_base"),
-                        rs.getInt("def_base"),
-                        rs.getInt("spd_base"),
-                        TipoCarta.valueOf(rs.getString("tipo")),
-                        Rareza.valueOf(rs.getString("rareza")),
-                        rs.getString("asset")
-                ) {};
+                Carta car = new Carta(rs.getString("nombre"), rs.getInt("hp_base"), rs.getInt("atk_base"), rs.getInt("def_base"), rs.getInt("spd_base"), TipoCarta.valueOf(rs.getString("tipo")), Rareza.valueOf(rs.getString("rareza")), rs.getString("asset")) {
+                };
 
                 car.setId(rs.getInt("id"));
 
@@ -108,9 +96,7 @@ public class DAOImpl implements DAO {
 
         String sql = "SELECT id, nombre, fecha_creacion FROM dual.mazos";
 
-        try (Connection conn = getConexion();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (Connection conn = getConexion(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
 
@@ -134,16 +120,9 @@ public class DAOImpl implements DAO {
 
         List<Carta> cartas = new ArrayList<>();
 
-        String sql =
-                "SELECT Carta.id, Carta.nombre, Carta.tipo, Carta.rareza, Carta.asset, " +
-                        "Carta.hp_base, Carta.atk_base, Carta.def_base, Carta.spd_base, " +
-                        "Carta.movimiento1, Carta.movimiento2 " +
-                        "FROM dual.Carta " +
-                        "JOIN dual.mazo_cartas ON Carta.id = mazo_cartas.id_carta " +
-                        "WHERE mazo_cartas.id_mazo = ?";
+        String sql = "SELECT Carta.id, Carta.nombre, Carta.tipo, Carta.rareza, Carta.asset, " + "Carta.hp_base, Carta.atk_base, Carta.def_base, Carta.spd_base, " + "Carta.movimiento1, Carta.movimiento2 " + "FROM dual.Carta " + "JOIN dual.mazo_cartas ON Carta.id = mazo_cartas.id_carta " + "WHERE mazo_cartas.id_mazo = ?";
 
-        try (Connection conn = getConexion();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConexion(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, idMazo);
 
@@ -151,16 +130,8 @@ public class DAOImpl implements DAO {
 
                 while (rs.next()) {
 
-                    Carta carta = new Carta(
-                            rs.getString("nombre"),
-                            rs.getInt("hp_base"),
-                            rs.getInt("atk_base"),
-                            rs.getInt("def_base"),
-                            rs.getInt("spd_base"),
-                            TipoCarta.valueOf(rs.getString("tipo")),
-                            Rareza.valueOf(rs.getString("rareza")),
-                            rs.getString("asset")
-                    ) {};
+                    Carta carta = new Carta(rs.getString("nombre"), rs.getInt("hp_base"), rs.getInt("atk_base"), rs.getInt("def_base"), rs.getInt("spd_base"), TipoCarta.valueOf(rs.getString("tipo")), Rareza.valueOf(rs.getString("rareza")), rs.getString("asset")) {
+                    };
 
                     carta.setId(rs.getInt("id"));
 
@@ -192,8 +163,7 @@ public class DAOImpl implements DAO {
 
         String sql = "INSERT INTO dual.mazo_cartas (id_mazo, id_carta) VALUES (?, ?)";
 
-        try (Connection conn = getConexion();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConexion(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, idMazo);
             ps.setInt(2, idCarta);
@@ -219,8 +189,7 @@ public class DAOImpl implements DAO {
 
         String sql = "INSERT INTO dual.mazos (nombre) VALUES (?) RETURNING id";
 
-        try (Connection conn = getConexion();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConexion(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, m.getNombre());
 
@@ -236,5 +205,188 @@ public class DAOImpl implements DAO {
         }
 
         return idGenerado;
+    }
+
+    @Override
+    public Carta obtenerCartaPorId(int id) {
+
+        Carta carta = null;
+
+        String sql = "SELECT * FROM dual.Carta WHERE id = ?";
+
+        try (Connection conexion = getConexion(); PreparedStatement ps = conexion.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                if (rs.next()) {
+
+                    carta = new Carta(rs.getString("nombre"), rs.getInt("hp_base"), rs.getInt("atk_base"), rs.getInt("def_base"), rs.getInt("spd_base"), TipoCarta.valueOf(rs.getString("tipo")), Rareza.valueOf(rs.getString("rareza")), rs.getString("asset")) {
+                    };
+
+                    carta.setId(rs.getInt("id"));
+
+                    // Cargar movimientos reales
+                    String mov1 = rs.getString("movimiento1");
+                    String mov2 = rs.getString("movimiento2");
+
+                    Movimiento[] movs = new Movimiento[2];
+                    movs[0] = MovimientoFactory.crearMovimientoDesdeNombre(mov1);
+                    movs[1] = MovimientoFactory.crearMovimientoDesdeNombre(mov2);
+
+                    carta.setMovimientos(movs);
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return carta;
+    }
+
+    @Override
+    public List<Carta> obtenerCartasPorRareza(String rareza) {
+
+        List<Carta> cartas = new ArrayList<>();
+
+        String sql = "SELECT * FROM dual.Carta WHERE rareza = ?";
+
+        try (Connection conexion = getConexion(); PreparedStatement ps = conexion.prepareStatement(sql)) {
+
+            ps.setString(1, rareza);
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                while (rs.next()) {
+
+                    Carta carta = new Carta(rs.getString("nombre"), rs.getInt("hp_base"), rs.getInt("atk_base"), rs.getInt("def_base"), rs.getInt("spd_base"), TipoCarta.valueOf(rs.getString("tipo")), Rareza.valueOf(rs.getString("rareza")), rs.getString("asset")) {
+                    };
+
+                    carta.setId(rs.getInt("id"));
+
+                    // Cargar movimientos reales
+                    String mov1 = rs.getString("movimiento1");
+                    String mov2 = rs.getString("movimiento2");
+
+                    Movimiento[] movs = new Movimiento[2];
+                    movs[0] = MovimientoFactory.crearMovimientoDesdeNombre(mov1);
+                    movs[1] = MovimientoFactory.crearMovimientoDesdeNombre(mov2);
+
+                    carta.setMovimientos(movs);
+
+                    cartas.add(carta);
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return cartas;
+    }
+
+
+    //SOBRES
+
+    private Carta obtenerCartaAleatoriaPorRareza(String rareza) {
+
+        List<Carta> cartas = obtenerCartasPorRareza(rareza);
+
+        if (cartas.isEmpty()) return null;
+
+        Random r = new Random();
+        return cartas.get(r.nextInt(cartas.size()));
+    }
+
+    private String elegirRarezaPorProbabilidad(Map<String, Integer> probabilidades) {
+
+        int total = 0;
+        for (int p : probabilidades.values()) total += p;
+
+        int random = new Random().nextInt(total) + 1;
+        int acumulado = 0;
+
+        for (Map.Entry<String, Integer> entry : probabilidades.entrySet()) {
+            acumulado += entry.getValue();
+            if (random <= acumulado) {
+                return entry.getKey();
+            }
+        }
+
+        return "COMUN"; // fallback
+    }
+
+
+    @Override
+    public List<Carta> abrirSobreComun(int cantidad) {
+
+        List<Carta> resultado = new ArrayList<>();
+
+        Map<String, Integer> prob = new HashMap<>();
+        prob.put("COMUN", 80);
+        prob.put("RARA", 15);
+        prob.put("EPICA", 5);
+
+        for (int i = 0; i < cantidad; i++) {
+            String rareza = elegirRarezaPorProbabilidad(prob);
+            resultado.add(obtenerCartaAleatoriaPorRareza(rareza));
+        }
+
+        return resultado;
+    }
+
+    @Override
+    public List<Carta> abrirSobreRaro(int cantidad) {
+
+        List<Carta> resultado = new ArrayList<>();
+
+        Map<String, Integer> prob = new HashMap<>();
+        prob.put("RARA", 65);
+        prob.put("EPICA", 30);
+        prob.put("LEGENDARIA", 5);
+
+        for (int i = 0; i < cantidad; i++) {
+            String rareza = elegirRarezaPorProbabilidad(prob);
+            resultado.add(obtenerCartaAleatoriaPorRareza(rareza));
+        }
+
+        return resultado;
+    }
+
+    @Override
+    public List<Carta> abrirSobreEpico(int cantidad) {
+
+        List<Carta> resultado = new ArrayList<>();
+
+        Map<String, Integer> prob = new HashMap<>();
+        prob.put("EPICA", 50);
+        prob.put("RARA", 40);
+        prob.put("LEGENDARIA", 10);
+
+        for (int i = 0; i < cantidad; i++) {
+            String rareza = elegirRarezaPorProbabilidad(prob);
+            resultado.add(obtenerCartaAleatoriaPorRareza(rareza));
+        }
+
+        return resultado;
+    }
+
+    @Override
+    public List<Carta> abrirSobreLegendario(int cantidad) {
+
+        List<Carta> resultado = new ArrayList<>();
+
+        Map<String, Integer> prob = new HashMap<>();
+        prob.put("LEGENDARIA", 30);
+        prob.put("EPICA", 70);
+
+        for (int i = 0; i < cantidad; i++) {
+            String rareza = elegirRarezaPorProbabilidad(prob);
+            resultado.add(obtenerCartaAleatoriaPorRareza(rareza));
+        }
+
+        return resultado;
     }
 }
