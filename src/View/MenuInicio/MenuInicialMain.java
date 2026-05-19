@@ -208,13 +208,13 @@ public class MenuInicialMain extends JFrame {
 
         private void dibujarMoneda(Graphics2D g2, int x, int y, int size) {
             g2.setColor(new Color(0, 0, 0, 80));
-            g2.fillOval(x + 2, y, size, size);
+            g2.fillOval(x + 2, y + 2, size, size);
 
             g2.setColor(new Color(0xDAA520));
             g2.fillOval(x, y, size, size);
 
             g2.setColor(new Color(0xFFD700));
-            g2.fillOval(x + 3, y, size - 6, size - 6);
+            g2.fillOval(x + 3, y + 3, size - 6, size - 6);
 
             g2.setColor(new Color(0xB8860B));
             g2.setFont(new Font("Serif", Font.BOLD, 16));
@@ -414,7 +414,7 @@ public class MenuInicialMain extends JFrame {
 
     public static void main(String[] args) {
         String nombre = "Jugador1";
-        int dinero = 100;
+        int dinero = 1000;
         SwingUtilities.invokeLater(() -> new MenuInicialMain(nombre, dinero));
     }
 }

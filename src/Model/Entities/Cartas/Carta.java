@@ -31,6 +31,9 @@ public abstract class Carta {
     public Movimiento[] movimientos;
 
 
+    private int ultimoDanio;
+
+
     public Carta(String nombre, int hp, int atk, int def, int spd,TipoCarta tipo,Rareza rareza,String asset) {
         this.nombre = nombre;
         this.hpBase = hp;
@@ -93,6 +96,14 @@ public abstract class Carta {
         }
     }
 
+    public int getUltimoDanio() {
+        return ultimoDanio;
+    }
+
+    public void setUltimoDanio(int ultimoDanio) {
+        this.ultimoDanio = ultimoDanio;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -111,6 +122,9 @@ public abstract class Carta {
 
     public String getTipo() {
         return tipo.toString();
+    }
+    public TipoCarta getTipoE(){
+        return tipo;
     }
 
     public void setTipo(TipoCarta tipo) {

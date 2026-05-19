@@ -47,4 +47,12 @@ public class Tablero {
 
         return casillasEnemigas[(this.getPosiciones(casilla))].getCarta();
     }
+
+    public Casilla[] getCasillasJ2() {
+        return casillasJ2;
+    }
+
+    public Casilla[] getCasillasJ1() {
+        return casillasJ1;
+    }
 }

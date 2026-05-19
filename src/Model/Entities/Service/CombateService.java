@@ -16,8 +16,14 @@ public class CombateService {
         casilla.getCarta().usarAtaque(slotmov,tablero.obtenerEnemigoEnFrente(esJugador1,casilla));
     }
 
-    public void ponerCarta(int slot,Carta carta){
+    public void ponerCarta(int slot,int slotmazo,Jugador jugador){
+        if (jugador.isEsJugador1()){
+            tablero.getCasillasJ1()[slot].setCarta(jugador.getMazo().getCartas().get(slotmazo));
+        }else{
+            tablero.getCasillasJ2()[slot].setCarta(jugador.getMazo().getCartas().get(slotmazo));
+        }
     }
+
     public void asignarJugador1(Jugador jugadorA,Jugador jugadorB){
         int numero = rd.nextInt(10);
         if (numero >= 5){
@@ -29,10 +35,27 @@ public class CombateService {
         }
     }
 
-
-
-    public void aplicardanio(Carta aliada,Carta enemiga,double multiplicador){
-        enemiga.setHpActual((int) (enemiga.getHpActual() - aliada.getAtkActual() * multiplicador));
+    public void aplicardanio(Carta aliada,Carta enemiga,double multiplicador,int danio){
+        enemiga.setHpActual((int)((enemiga.getHpActual() + (double) enemiga.getDefActual() / 2) - (aliada.getAtkActual() + danio) * multiplicador));
+        enemiga.setUltimoDanio((int)((enemiga.getHpActual() + (double) enemiga.getDefActual() / 2) - (aliada.getAtkActual() + danio) * multiplicador));
+    }
+    public void aplicarUltimodanio(Carta enemiga){
+        enemiga.setHpActual(enemiga.getHpActual() - enemiga.getUltimoDanio());
+    }
+    public Carta atacarprimero(Carta aliada,Carta enemiga){
+        if (aliada.getSpdActual() > enemiga.getSpdActual()){
+            return aliada;
+        }
+        if (aliada.getSpdActual() < enemiga.getSpdActual()){
+            return enemiga;
+        }else{
+            int numero = rd.nextInt();
+            if (numero >= 5){
+                return aliada;
+            }else{
+                return enemiga;
+            }
+        }
     }
 
     boolean ValidarKO(Carta carta){
