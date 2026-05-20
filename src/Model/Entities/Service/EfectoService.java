@@ -10,11 +10,11 @@ public class EfectoService {
     }
 
     public void aplicarBuffDef(Carta carta, int buff) {
-        carta.setAtkActual(carta.getDefActual() + carta.getDefActual() * buff);
+        carta.setDefActual(carta.getDefActual() + carta.getDefActual() * buff);
     }
 
     public void aplicarBuffSpd(Carta carta, int buff) {
-        carta.setAtkActual(carta.getSpdActual() + carta.getSpdActual() * buff);
+        carta.setSpdActual(carta.getSpdActual() + carta.getSpdActual() * buff);
     }
 
     //Debuff
@@ -23,10 +23,11 @@ public class EfectoService {
     }
 
     public void aplicarDebuffDef(Carta carta, int buff) {
-        carta.setAtkActual(carta.getDefActual() - carta.getDefActual() * buff);
+        carta.setDefActual(carta.getDefActual() - carta.getDefActual() * buff/100);
     }
 
+
     public void aplicarDebuffSpd(Carta carta, int buff) {
-        carta.setAtkActual(carta.getSpdActual() - carta.getSpdActual() * buff);
+        carta.setSpdActual(carta.getSpdActual() - carta.getSpdActual() * buff);
     }
 }
