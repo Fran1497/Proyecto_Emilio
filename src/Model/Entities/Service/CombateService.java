@@ -36,12 +36,17 @@ public class CombateService {
     }
 
     public void aplicardanio(Carta aliada,Carta enemiga,double multiplicador,int danio){
-        enemiga.setHpActual((int)((enemiga.getHpActual() + (double) enemiga.getDefActual() / 2) - (aliada.getAtkActual() + danio) * multiplicador));
-        enemiga.setUltimoDanio((int)((enemiga.getHpActual() + (double) enemiga.getDefActual() / 2) - (aliada.getAtkActual() + danio) * multiplicador));
+        int daniorecibido = (int) ((aliada.getAtkActual() + danio) * multiplicador);
+        enemiga.setUltimoDanio(daniorecibido);
+        enemiga.setHpActual(enemiga.getHpActual() - daniorecibido);
     }
+
+
     public void aplicarUltimodanio(Carta enemiga){
         enemiga.setHpActual(enemiga.getHpActual() - enemiga.getUltimoDanio());
     }
+
+
     public Carta atacarprimero(Carta aliada,Carta enemiga){
         if (aliada.getSpdActual() > enemiga.getSpdActual()){
             return aliada;

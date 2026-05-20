@@ -1,5 +1,7 @@
 package Model.Entities.Movimientos;
 
+import Model.Entities.Movimientos.Creados.Movimiento;
+
 public class MovimientoFactory {
 
 

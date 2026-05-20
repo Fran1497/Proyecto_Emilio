@@ -1,6 +1,6 @@
 package Model.Entities.Cartas;
 
-import Model.Entities.Movimientos.Movimiento;
+import Model.Entities.Movimientos.Creados.Movimiento;
 import Model.Entities.Rareza;
 import Model.Entities.TipoCarta;
 
@@ -34,7 +34,7 @@ public abstract class Carta {
     private int ultimoDanio;
 
 
-    public Carta(String nombre, int hp, int atk, int def, int spd,TipoCarta tipo,Rareza rareza,String asset) {
+    public Carta(String nombre, int hp, int atk, int def, int spd,TipoCarta tipo,Rareza rareza) {
         this.nombre = nombre;
         this.hpBase = hp;
         this.atkBase = atk;

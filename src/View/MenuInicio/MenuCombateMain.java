@@ -1,12 +1,13 @@
 package View.MenuCombate;
 
 import javax.swing.*;
-import java.awt.*;package View.MenuInicio;
-
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.geom.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
+
+package View.MenuInicio;
 
 public class MenuInicialMain extends JFrame {
 

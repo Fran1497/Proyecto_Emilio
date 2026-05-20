@@ -1,4 +1,4 @@
-package Model.Entities.Movimientos;
+package Model.Entities.Movimientos.Creados;
 
 
 import Model.Entities.Cartas.Carta;

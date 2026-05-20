@@ -1,9 +1,11 @@
-package Model.Entities.Movimientos;
+package Model.Entities.Movimientos.Creados;
 
 import Model.Entities.Cartas.Carta;
 
-public class CapturarError extends Movimiento{
+public class CapturarError extends Movimiento {
 
+
+    //Pertenece a TRYCATCH
     public CapturarError() {
         super("CapturarError", 0);
     }

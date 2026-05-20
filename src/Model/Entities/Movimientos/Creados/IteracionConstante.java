@@ -1,11 +1,12 @@
-package Model.Entities.Movimientos;
+package Model.Entities.Movimientos.Creados;
 
 import Model.Entities.Cartas.Carta;
-import Model.Entities.TipoCarta;
 
-public class IteraciónConstante extends Movimiento {
+public class IteracionConstante extends Movimiento {
 
-    public IteraciónConstante() {
+
+    //Pertenece a FORLOOP
+    public IteracionConstante() {
         super("IteracionConstante",10);
     }
 

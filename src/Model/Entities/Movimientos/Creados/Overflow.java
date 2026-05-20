@@ -1,12 +1,14 @@
-package Model.Entities.Movimientos;
+package Model.Entities.Movimientos.Creados;
 
 import Model.Entities.Cartas.Carta;
 import Model.Entities.TipoCarta;
 
-public class OverFlow extends Movimiento {
+public class Overflow extends Movimiento {
 
-    public OverFlow() {
-        super("OverFlow",10);
+
+    //Pertenece a FORLOOP
+    public Overflow() {
+        super("Overflow",10);
     }
 
 
@@ -18,6 +20,8 @@ public class OverFlow extends Movimiento {
             int multiplicador = 2;
         }
         combateService.aplicardanio(aliado,enemigo,mulplicador,this.getDanio());
+        System.out.println("Ultimo danio recibido: " + enemigo.getUltimoDanio());
+        System.out.println("Ultimo hp: " + enemigo.getHpActual());
     }
 }
 
