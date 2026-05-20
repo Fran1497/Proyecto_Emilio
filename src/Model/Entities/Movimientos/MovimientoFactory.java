@@ -7,7 +7,7 @@ public class MovimientoFactory {
 
     public static Movimiento crearMovimientoDesdeNombre(String nombre) {
         try {
-            String ruta = "Model.Entities.Movimientos." + nombre;
+            String ruta = "Model.Entities.Movimientos.Creados." + nombre;
             Class<?> clazz = Class.forName(ruta);
             return (Movimiento) clazz.getDeclaredConstructor().newInstance();
 
@@ -16,6 +16,7 @@ public class MovimientoFactory {
             return new MovimientoGenerico(nombre);
         }
     }
+
 
 
 }

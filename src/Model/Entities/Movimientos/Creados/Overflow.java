@@ -5,23 +5,21 @@ import Model.Entities.TipoCarta;
 
 public class Overflow extends Movimiento {
 
-
-    //Pertenece a FORLOOP
     public Overflow() {
-        super("Overflow",10);
+        super("Overflow", 12); // un poco más fuerte que IteracionConstante
     }
-
 
     @Override
-    public void usar(Carta aliado, Carta enemigo) {
-        System.out.println("Ejecutando overflow");
-        int mulplicador = 1;
-        if (enemigo.getTipoE() == TipoCarta.EXCEPCION){
-            int multiplicador = 2;
-        }
-        combateService.aplicardanio(aliado,enemigo,mulplicador,this.getDanio());
-        System.out.println("Ultimo danio recibido: " + enemigo.getUltimoDanio());
-        System.out.println("Ultimo hp: " + enemigo.getHpActual());
+    public int usar(Carta aliado, Carta enemigo) {
+
+        double multiplicador = enemigo.getTipoE() == TipoCarta.EXCEPCION ? 2.0 : 1.0;
+
+        int danioReal = combateService.aplicardanio(aliado, enemigo, multiplicador, this.getDanio());
+
+        return danioReal;
     }
+
+
 }
+
 

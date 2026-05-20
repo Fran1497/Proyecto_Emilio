@@ -1,21 +1,27 @@
 package Model.Entities.Movimientos.Creados;
 
+// Pertenece a ThrowKeyword
+
 import Model.Entities.Cartas.Carta;
+import Model.Entities.Service.CombateService;
 
 public class Throw extends Movimiento {
 
-
-    //Pertenece a TRYCATCH
     public Throw() {
-        super("Throw", 0);
+        super("Throw", 12);
     }
 
     @Override
-    public void usar(Carta aliado, Carta enemigo) {
-        System.out.println("Ejecutando Trow");
-        combateService.aplicarUltimodanio(enemigo);
-        System.out.println("Ultimo danio recibido: " + enemigo.getUltimoDanio());
-        System.out.println("Ultimo hp: " + enemigo.getHpActual());
-    }
+    public int usar(Carta aliado, Carta enemigo) {
 
+        CombateService combateService = new CombateService();
+
+        // Daño real siguiendo tu patrón
+        int danioReal = combateService.aplicardanio(aliado, enemigo, 1.5, this.getDanio());
+
+        // Antes: enemigo.setSkipTurn(true);
+        enemigo.setTurnosAturdido(1);
+
+        return danioReal;
+    }
 }

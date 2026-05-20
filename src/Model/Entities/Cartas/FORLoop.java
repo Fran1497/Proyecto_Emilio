@@ -11,7 +11,7 @@ public class FORLoop extends Carta {
 
     //Mov1:OverFlow   Mov2:IteraciónConstante
     public FORLoop() {
-        super("FORLoop", 80, 40, 30, 20, TipoCarta.BUCLE, Rareza.COMUN);
+        super("For", 80, 45, 10, 25, TipoCarta.BUCLE, Rareza.COMUN);
         Overflow mov1 = new Overflow();
         IteracionConstante mov2 = new IteracionConstante();
         movimientos[0] = mov1;

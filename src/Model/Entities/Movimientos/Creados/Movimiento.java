@@ -8,17 +8,20 @@ import Model.Entities.Service.EfectoService;
 public abstract class Movimiento {
     private String nombre;
     private int danio;
-    CombateService combateService = new CombateService();
+    protected static final CombateService combateService = new CombateService();
+
     EfectoService efectoService = new EfectoService();
+
 
     public Movimiento(String nombre,int danio) {
         this.nombre = nombre;
+        this.danio = danio; // ← ESTA LÍNEA ES LA QUE FALTABA
     }
 
 
-    public void usar(Carta aliado,Carta enemigo) {
 
-    }
+
+    public abstract int usar(Carta aliado, Carta enemigo);
 
     public String getNombre() {
         return nombre;
