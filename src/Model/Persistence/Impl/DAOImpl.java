@@ -2,6 +2,7 @@ package Model.Persistence.Impl;
 
 import Model.Entities.Cartas.Carta;
 import Model.Entities.Movimientos.*;
+import Model.Entities.Movimientos.Creados.Movimiento;
 import Model.Entities.Rareza;
 import Model.Entities.TipoCarta;
 import Model.Entities.mazos;
@@ -71,7 +72,7 @@ public class DAOImpl implements DAO {
 
             while (rs.next()) {
 
-                Carta car = new Carta(rs.getString("nombre"), rs.getInt("hp_base"), rs.getInt("atk_base"), rs.getInt("def_base"), rs.getInt("spd_base"), TipoCarta.valueOf(rs.getString("tipo")), Rareza.valueOf(rs.getString("rareza")), rs.getString("asset")) {
+                Carta car = new Carta(rs.getString("nombre"), rs.getInt("hp_base"), rs.getInt("atk_base"), rs.getInt("def_base"), rs.getInt("spd_base"), TipoCarta.valueOf(rs.getString("tipo")), Rareza.valueOf(rs.getString("rareza"))) {
                 };
 
                 car.setId(rs.getInt("id"));
@@ -130,7 +131,7 @@ public class DAOImpl implements DAO {
 
                 while (rs.next()) {
 
-                    Carta carta = new Carta(rs.getString("nombre"), rs.getInt("hp_base"), rs.getInt("atk_base"), rs.getInt("def_base"), rs.getInt("spd_base"), TipoCarta.valueOf(rs.getString("tipo")), Rareza.valueOf(rs.getString("rareza")), rs.getString("asset")) {
+                    Carta carta = new Carta(rs.getString("nombre"), rs.getInt("hp_base"), rs.getInt("atk_base"), rs.getInt("def_base"), rs.getInt("spd_base"), TipoCarta.valueOf(rs.getString("tipo")), Rareza.valueOf(rs.getString("rareza"))) {
                     };
 
                     carta.setId(rs.getInt("id"));
@@ -222,7 +223,7 @@ public class DAOImpl implements DAO {
 
                 if (rs.next()) {
 
-                    carta = new Carta(rs.getString("nombre"), rs.getInt("hp_base"), rs.getInt("atk_base"), rs.getInt("def_base"), rs.getInt("spd_base"), TipoCarta.valueOf(rs.getString("tipo")), Rareza.valueOf(rs.getString("rareza")), rs.getString("asset")) {
+                    carta = new Carta(rs.getString("nombre"), rs.getInt("hp_base"), rs.getInt("atk_base"), rs.getInt("def_base"), rs.getInt("spd_base"), TipoCarta.valueOf(rs.getString("tipo")), Rareza.valueOf(rs.getString("rareza"))) {
                     };
 
                     carta.setId(rs.getInt("id"));
@@ -261,7 +262,7 @@ public class DAOImpl implements DAO {
 
                 while (rs.next()) {
 
-                    Carta carta = new Carta(rs.getString("nombre"), rs.getInt("hp_base"), rs.getInt("atk_base"), rs.getInt("def_base"), rs.getInt("spd_base"), TipoCarta.valueOf(rs.getString("tipo")), Rareza.valueOf(rs.getString("rareza")), rs.getString("asset")) {
+                    Carta carta = new Carta(rs.getString("nombre"), rs.getInt("hp_base"), rs.getInt("atk_base"), rs.getInt("def_base"), rs.getInt("spd_base"), TipoCarta.valueOf(rs.getString("tipo")), Rareza.valueOf(rs.getString("rareza"))) {
                     };
 
                     carta.setId(rs.getInt("id"));
