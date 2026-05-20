@@ -13,13 +13,13 @@ public class MainCombateTest {
         Scanner sc = new Scanner(System.in);
         CombateService combateService = new CombateService();
 
+        // Cartas SIN STUN
         Carta carta1 = new Paquete();
-        Carta carta2 = new Socket();
+        Carta carta2 = new Compilacion();
 
-
-        System.out.println("=== COMBATE DE PRUEBA ===");
+        System.out.println("=== COMBATE DE PRUEBA (SIN STUN) ===");
         System.out.println(carta1.getNombre() + " VS " + carta2.getNombre());
-        System.out.println("--------------------------");
+        System.out.println("-------------------------------------");
 
         boolean turnoJugador1 = true;
 
@@ -27,11 +27,6 @@ public class MainCombateTest {
 
             Carta atacante = turnoJugador1 ? carta1 : carta2;
             Carta defensor = turnoJugador1 ? carta2 : carta1;
-
-            if (combateService.procesarSaltosDeTurno(atacante)) {
-                turnoJugador1 = !turnoJugador1;
-                continue;
-            }
 
             System.out.println("\nTurno de: " + atacante.getNombre());
             System.out.println("HP " + atacante.getNombre() + ": " + atacante.getHpActual());
@@ -51,10 +46,8 @@ public class MainCombateTest {
 
             System.out.println(atacante.getNombre() + " usa " + elegido.getNombre());
 
-            // 🔥 AHORA usar() DEVUELVE EL DAÑO REAL
             int danioReal = elegido.usar(atacante, defensor);
 
-            // Mostrar daño real
             combateService.aplicarUltimoDanio(defensor, danioReal);
 
             if (defensor.getHpActual() <= 0) {

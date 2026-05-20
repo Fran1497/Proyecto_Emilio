@@ -36,21 +36,21 @@ public class DAOImpl implements DAO {
 
         int filas = 0;
 
-        String sql = "INSERT INTO dual.Carta " + "(nombre, tipo, rareza, asset, hp_base, atk_base, def_base, spd_base, movimiento1, movimiento2) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO dual.Carta "
+                + "(nombre, tipo, rareza, hp_base, atk_base, def_base, spd_base, movimiento1, movimiento2) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conexion = getConexion(); PreparedStatement ps = conexion.prepareStatement(sql)) {
 
             ps.setString(1, car.getNombre());
             ps.setString(2, car.getTipo());
             ps.setString(3, car.getRareza());
-            ps.setString(4, car.getAsset());
-            ps.setInt(5, car.getHpBase());
-            ps.setInt(6, car.getAtkBase());
-            ps.setInt(7, car.getDefBase());
-            ps.setInt(8, car.getSpdBase());
-
-            ps.setString(9, car.getMovimientos()[0].getNombre());
-            ps.setString(10, car.getMovimientos()[1].getNombre());
+            ps.setInt(4, car.getHpBase());
+            ps.setInt(5, car.getAtkBase());
+            ps.setInt(6, car.getDefBase());
+            ps.setInt(7, car.getSpdBase());
+            ps.setString(8, car.getMovimientos()[0].getNombre());
+            ps.setString(9, car.getMovimientos()[1].getNombre());
 
             filas = ps.executeUpdate();
 
@@ -60,6 +60,7 @@ public class DAOImpl implements DAO {
 
         return filas;
     }
+
 
     @Override
     public List<Carta> mostrarCartasT() {

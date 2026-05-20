@@ -297,4 +297,48 @@ public abstract class Carta {
                 ", movimientos=" + Arrays.toString(movimientos) +
                 '}';
     }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setTipo(TipoCarta tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setRareza(Rareza rareza) {
+        this.rareza = rareza;
+    }
+
+    public String getAsset() {
+        return asset;
+    }
+
+    public void setAsset(String asset) {
+        this.asset = asset;
+    }
+
+    public void setHpBase(int hpBase) {
+        this.hpBase = hpBase;
+    }
+
+    public void setAtkBase(int atkBase) {
+        this.atkBase = atkBase;
+    }
+
+    public void setDefBase(int defBase) {
+        this.defBase = defBase;
+    }
+
+    public void setSpdBase(int spdBase) {
+        this.spdBase = spdBase;
+    }
+
+    public void setMovimientos(Movimiento[] movimientos) {
+        this.movimientos = movimientos;
+    }
 }
